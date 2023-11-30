@@ -4,7 +4,7 @@ info:
   contact: {}
   version: "1.0"
 servers:
-  - url: https://dn-live-test.onrender.com
+  - url: https://dn-live-test.onrender.com/
     variables: {}
 paths:
   /api/v1/activities:
@@ -48,44 +48,10 @@ paths:
           description: ""
           headers: {}
       deprecated: false
-  /api/v1/activities/{id}:
+  /api/v1/activities/{activityID}:
     parameters:
       - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-        description: The activity resource id
-    put:
-      tags:
-        - Activities
-      summary: Update Activity
-      description: Endpoint for updating an activity. Activity ID must be provided as a URL param!
-      operationId: UpdateActivity
-      parameters: []
-      requestBody:
-        description: ""
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: "#/components/schemas/UpdateActivityRequest"
-                - example:
-                    name: Hiking
-                    category: relaxing
-            example:
-              name: Hiking
-              category: relaxing
-        required: true
-      responses:
-        "200":
-          description: ""
-          headers: {}
-      deprecated: false
-  /api/v1/activities/{id}:
-    parameters:
-      - in: path
-        name: id
+        name: activityID
         schema:
           type: string
         required: true
@@ -114,10 +80,36 @@ paths:
           description: ""
           headers: {}
       deprecated: false
+    put:
+      tags:
+        - Activities
+      summary: Update Activity
+      description: Endpoint for updating an activity. Activity ID must be provided as a URL param!
+      operationId: UpdateActivity
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdateActivityRequest"
+                - example:
+                    name: Hiking
+                    category: relaxing
+            example:
+              name: Hiking
+              category: relaxing
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
   /api/v1/votes/{activityID}:
     parameters:
       - in: path
-        name: id
+        name: activityID
         schema:
           type: string
         required: true
