@@ -4,7 +4,7 @@ info:
   contact: {}
   version: "1.0"
 servers:
-  - url: https://dn-live-test.onrender.com/api/v1
+  - url: https://dn-live-test.onrender.com
     variables: {}
 paths:
   /api/v1/activities:
