@@ -6,6 +6,10 @@ const favicon = require("express-favicon");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 
+// api documentation: swagger
+const swaggerDocument = require("yamljs").load("./src/swagger.yaml");
+const swaggerUi = require("swagger-ui-express");
+
 // imports
 const testsRouter = require("./routes/testsRouter");
 const activitiesRouter = require("./routes/activitiesRouter");
@@ -13,7 +17,6 @@ const authRouter = require("./routes/authRouter");
 const votesRouter = require("./routes/votesRouter");
 
 const { errorHandler, notFound } = require("./middleware/errorHandler");
-
 // middleware
 
 // we shall change the cors origin once the frontend is deployed
@@ -26,6 +29,14 @@ app.use(express.static("public"));
 app.use(favicon(path.join(__dirname, "/public/favicon.ico")));
 
 // routes
+app.get("/", (req, res) => {
+  res.send(
+    '<h2>Go to API Documentation</h2><a href="/api-docs">Documentation</a>'
+  );
+});
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use("/api/v1", testsRouter);
 app.use("/api/v1/activities", activitiesRouter);
 app.use("/api/v1/auth", authRouter);
