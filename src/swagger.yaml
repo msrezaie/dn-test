@@ -44,7 +44,7 @@ paths:
               description: A sports tournament event.
         required: true
       responses:
-        "200":
+        "201":
           description: ""
           headers: {}
       deprecated: false
@@ -156,58 +156,75 @@ paths:
           description: ""
           headers: {}
       deprecated: false
-components:
-  schemas:
-    CreateActivityRequest:
-      title: CreateActivityRequest
-      required:
-        - name
-        - category
-        - description
-      type: object
-      properties:
-        name:
-          type: string
-        category:
-          type: string
-        description:
-          type: string
-      example:
-        name: Soccer Day
-        category: social
-        description: A sports tournament event.
-    UpdateActivityRequest:
-      title: UpdateActivityRequest
-      required:
-        - name
-        - category
-      type: object
-      properties:
-        name:
-          type: string
-        category:
-          type: string
-      example:
-        name: Hiking
-        category: relaxing
-    SignupUserRequest:
-      title: SignupUserRequest
-      required:
-        - name
-        - email
-        - password
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        password:
-          type: string
-      example:
-        name: Morez
-        email: example@email.com
-        password: strongPass123
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      description: Endpoint for creating a new json web token with the verified user's id as its payload stored in a HTTP only cookie which gets stored in the client side machine. The cookie is automatically sent to the server on every subsequent request.
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/SignupUserRequest"
+                - example:
+                    email: example@email.com
+                    password: strongPass123
+            example:
+              email: example@email.com
+              password: strongPass123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /api/v1/auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout User
+      description: Endpoint for creating a new json web token with the verified user's id as its payload stored in a HTTP only cookie which gets stored in the client side machine. The cookie is automatically sent to the server on every subsequent request.
+      operationId: LogoutUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/SignupUserRequest"
+                - example:
+                    email: example@email.com
+                    password: strongPass123
+            example:
+              email: example@email.com
+              password: strongPass123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /api/v1/auth/getCurrentUser:
+    get:
+      tags:
+        - Auth
+      summary: Get Current User
+      description: >-
+        Returns authenticated user's information
+        An authenticated user's token required
+      operationId: GetCurrentUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
 tags:
   - name: Activities
     description: ""
