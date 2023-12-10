@@ -7,6 +7,19 @@ servers:
   - url: https://dn-live-test.onrender.com/
     variables: {}
 paths:
+  /api/v1/users:
+    get:
+      tags:
+        - Users
+      summary: Get All Registered Users
+      description: Endpoint for listing all the registered users.
+      operationId: GetAllUsers
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
   /api/v1/events:
     get:
       tags:
@@ -433,6 +446,8 @@ components:
         email: example@email.com
         password: strongPass123
 tags:
+  - name: Users
+    description: ""
   - name: Auth
     description: ""
   - name: Activities
