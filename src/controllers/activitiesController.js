@@ -5,26 +5,26 @@ const EventActivity = require("../models/EventActivity");
 
 // @desc    Endpoint for fetching all activities
 // @routes  GET /api/v1/activities
-//          GET /api/v1/activities?suggestions=true
 // @access  public
 const getAllActivities = async (req, res) => {
-  const { suggestions } = req.query;
-  if (suggestions) {
-    const suggestedActivities = [];
-    for (let i = 0; i < 5; i++) {
-      const apiResponse = await axios.get(
-        `https://www.boredapi.com/api/activity?participants=${i + 1}`
-      );
-      suggestedActivities.push(apiResponse.data);
-    }
-    return res.json({
-      count: suggestedActivities.length,
-      activities: suggestedActivities,
-    });
-  }
-  const response = await Activity.find();
+  const suggestedActivities = [];
 
-  return res.json({ count: response.length, activities: response });
+  for (let i = 0; i < 3; i++) {
+    const apiResponse = await axios.get(
+      `https://www.boredapi.com/api/activity?participants=${i + 1}`
+    );
+    suggestedActivities.push(apiResponse.data);
+  }
+  const hardCodedActivities = await Activity.aggregate([
+    { $sample: { size: 3 } },
+  ]);
+
+  suggestedActivities.push(...hardCodedActivities);
+
+  return res.json({
+    count: suggestedActivities.length,
+    activities: suggestedActivities,
+  });
 };
 
 // @desc    Endpoint for fetching a single activity
