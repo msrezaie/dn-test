@@ -1,0 +1,215 @@
+[{
+  "_id": {
+    "$oid": "656b6199fa36aea592c23080"
+  },
+  "activityID": {
+    "$oid": "656b6199fa36aea592c2307f"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-02T16:55:54.000Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-02T16:55:54.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656b61cafa36aea592c23085"
+  },
+  "activityID": {
+    "$oid": "656b61cafa36aea592c23084"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-02T16:56:42.033Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-02T16:56:42.033Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656b62e0fa36aea592c2308f"
+  },
+  "activityID": {
+    "$oid": "656b62e0fa36aea592c2308e"
+  },
+  "voters": [
+    {
+      "$oid": "656b62e6fa36aea592c23093"
+    },
+    {
+      "$oid": "6568fb622d91faf5b3b777e1"
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-12-02T17:01:20.844Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-02T17:02:02.943Z"
+  },
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "656d3d612b4a3921b72281ef"
+  },
+  "activityID": {
+    "$oid": "656d3d612b4a3921b72281ee"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:45:53.598Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:45:53.598Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3d702b4a3921b72281f3"
+  },
+  "activityID": {
+    "$oid": "656d3d702b4a3921b72281f2"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:46:08.891Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:46:08.891Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3d7c2b4a3921b72281f7"
+  },
+  "activityID": {
+    "$oid": "656d3d7c2b4a3921b72281f6"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:46:20.641Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:46:20.641Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3d9a2b4a3921b72281fe"
+  },
+  "activityID": {
+    "$oid": "656d3d9a2b4a3921b72281fd"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:46:50.810Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:46:50.810Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3da72b4a3921b7228202"
+  },
+  "activityID": {
+    "$oid": "656d3da72b4a3921b7228201"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:47:03.816Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:47:03.816Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3e312b4a3921b7228210"
+  },
+  "activityID": {
+    "$oid": "656d3e312b4a3921b722820f"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:49:21.792Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:49:21.792Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3e3b2b4a3921b7228214"
+  },
+  "activityID": {
+    "$oid": "656d3e3b2b4a3921b7228213"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:49:31.058Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:49:31.058Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3e442b4a3921b7228218"
+  },
+  "activityID": {
+    "$oid": "656d3e442b4a3921b7228217"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:49:40.817Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:49:40.817Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3e4e2b4a3921b722821c"
+  },
+  "activityID": {
+    "$oid": "656d3e4e2b4a3921b722821b"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:49:50.232Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:49:50.232Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656d3e552b4a3921b7228220"
+  },
+  "activityID": {
+    "$oid": "656d3e552b4a3921b722821f"
+  },
+  "voters": [],
+  "createdAt": {
+    "$date": "2023-12-04T02:49:57.909Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-04T02:49:57.909Z"
+  },
+  "__v": 0
+}]
