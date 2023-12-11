@@ -45,7 +45,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/v1/activities", activitiesRouter);
 app.use("/api/v1/events", authenticateUser, eventsRouter);
-app.use("/api/v1/groups", groupsRouter);
+app.use("/api/v1/groups", authenticateUser, groupsRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/votes", votesRouter);

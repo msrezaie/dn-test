@@ -2,17 +2,17 @@ const mongoose = require("mongoose");
 
 const groupSchema = new mongoose.Schema(
   {
-    name: {
+    groupName: {
       type: String,
       required: [true, "please provide a group name!"],
-    },
-    description: {
-      type: String,
-      default: "a default group description",
+      unique: true,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+    },
+    description: {
+      type: String,
     },
     members: [
       {
@@ -20,7 +20,10 @@ const groupSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    groupEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+    groupEvents: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+    },
   },
   { timestamps: true }
 );

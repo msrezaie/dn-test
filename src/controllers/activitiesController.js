@@ -7,7 +7,7 @@ const EventActivity = require("../models/EventActivity");
 // @routes  GET /api/v1/activities
 // @access  public
 const getAllActivities = async (req, res) => {
-  const suggestedActivities = [];
+  let suggestedActivities = [];
 
   for (let i = 0; i < 3; i++) {
     const apiResponse = await axios.get(
@@ -15,8 +15,21 @@ const getAllActivities = async (req, res) => {
     );
     suggestedActivities.push(apiResponse.data);
   }
+  suggestedActivities = suggestedActivities.map((element) => ({
+    activity: element.activity,
+    type: element.type,
+  }));
+
+  console.log(suggestedActivities);
   const hardCodedActivities = await Activity.aggregate([
     { $sample: { size: 3 } },
+    {
+      $project: {
+        activity: 1,
+        type: 1,
+        _id: 0,
+      },
+    },
   ]);
 
   suggestedActivities.push(...hardCodedActivities);
