@@ -96,14 +96,52 @@ const saveEvent = async (req, res) => {
   return res.json({ msg: "Event saved!", savedEvent });
 };
 
-// @desc    Endpoint for fetching all activities saved in an event
-// @routes  GET /api/v1/event/activities/:_id
+// @desc    Endpoint for updating an event
+// @route   PUT /api/v1/events/:_id
 // @access  signed in users only
-const getEventActivities = async (req, res) => {
+const updateEvent = async (req, res) => {
   const { _id } = req.params;
-  const response = await EventActivity.find({ eventID: _id }).populate("votes");
+  let { name, description, eventDateTime, activities } = req.body;
+  let newActivityIDs = [];
+  if (activities) {
+    const isValidActivities =
+      Array.isArray(activities) &&
+      activities.every((activity) => {
+        return (
+          activity.hasOwnProperty("activity") && activity.hasOwnProperty("type")
+        );
+      });
+    if (!isValidActivities) {
+      res.status(400);
+      throw new Error(
+        "Invalid 'activities' format. An array of at least one activity object that must have 'activity' and 'type' properties!"
+      );
+    }
+    activities = activities.map((element) => {
+      return { eventID: _id, ...element };
+    });
 
-  return res.json({ count: response.length, activities: response });
+    const savedEventActivities = await EventActivity.create(activities);
+
+    newActivityIDs = savedEventActivities.map((activity) => activity._id);
+  }
+
+  const newEvent = await Event.findOneAndUpdate(
+    { _id, host: req.user.userID },
+    {
+      name,
+      description,
+      eventDateTime,
+      $push: {
+        activities: newActivityIDs,
+      },
+    },
+    { new: true }
+  );
+  return res.json({
+    msg: "Event updated!",
+    newEvent,
+  });
 };
 
 // @desc    Endpoint for deleting a single event
@@ -129,7 +167,7 @@ const deleteEvent = async (req, res) => {
 module.exports = {
   getAllEvents,
   getEvent,
-  getEventActivities,
   saveEvent,
+  updateEvent,
   deleteEvent,
 };

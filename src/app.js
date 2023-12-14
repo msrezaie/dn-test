@@ -11,7 +11,6 @@ const activitiesRouter = require("./routes/activitiesRouter");
 const eventsRouter = require("./routes/eventsRouter");
 const groupsRouter = require("./routes/groupsRouter");
 const usersRouter = require("./routes/usersRouter");
-const votesRouter = require("./routes/votesRouter");
 const authRouter = require("./routes/authRouter");
 
 const { authenticateUser } = require("./middleware/authHandler");
@@ -50,7 +49,6 @@ app.use("/api/v1/events", authenticateUser, eventsRouter);
 app.use("/api/v1/groups", authenticateUser, groupsRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/votes", votesRouter);
 
 app.use(notFound);
 app.use(errorHandler);
