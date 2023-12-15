@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: date night
+  title: Groupals API
   contact: {}
   version: "1.0"
 servers:
@@ -366,7 +366,7 @@ paths:
       tags:
         - Auth
       summary: Signup User
-      description: Endpoint for creating a new user (signup). After a successful signup a json web token stored in a HTTP only cookie is sent to the client. This token contains the signed in user's ID as its payload, and is used for authorization/verification in the server. The cookie is automatically sent to the server on every subsequent request.
+      description: Endpoint for creating a new user (signup). After a successful signup an HTTP-Only cookie with a session ID as its payload gets sent to the client. This session ID corresponds to the signed in user's session with user's detail on the server, and is used for authorization/verification in the server. The cookie is automatically sent to the server on every subsequent request, without the need for the frontend app to save the session ID and attach it to each request.
       operationId: SignupUser
       parameters: []
       requestBody:
@@ -395,7 +395,7 @@ paths:
       tags:
         - Auth
       summary: Login User
-      description: Endpoint for creating a new json web token with the verified user's id as its payload stored in a HTTP only cookie which gets stored in the client side machine. The cookie is automatically sent to the server on every subsequent request.
+      description: After a successful signin an HTTP-Only cookie with a session ID as its payload gets sent to the client. This session ID corresponds to the signed in user's session with user's detail on the server, and is used for authorization/verification in the server. The cookie is automatically sent to the server on every subsequent request, without the need for the frontend app to save the session ID and attach it to each request.
       operationId: LoginUser
       parameters: []
       requestBody:
@@ -422,7 +422,7 @@ paths:
       tags:
         - Auth
       summary: Logout User
-      description: Endpoint for creating a new json web token with the verified user's id as its payload stored in a HTTP only cookie which gets stored in the client side machine. The cookie is automatically sent to the server on every subsequent request.
+      description: Endpoint for removing the signed in user's session from the server, hence logging the user out.
       operationId: LogoutUser
       parameters: []
       responses:

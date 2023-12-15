@@ -4,7 +4,10 @@ const app = express();
 const cors = require("cors");
 const favicon = require("express-favicon");
 const logger = require("morgan");
-const cookieParser = require("cookie-parser");
+
+const passport = require("passport");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 // imports
 const activitiesRouter = require("./routes/activitiesRouter");
@@ -13,8 +16,7 @@ const groupsRouter = require("./routes/groupsRouter");
 const usersRouter = require("./routes/usersRouter");
 const authRouter = require("./routes/authRouter");
 
-const { authenticateUser } = require("./middleware/authHandler");
-
+// middleware
 // api documentation: swagger-ui
 const swaggerDocument = require("yamljs").load(
   path.join(__dirname, "swagger.yaml")
@@ -22,8 +24,7 @@ const swaggerDocument = require("yamljs").load(
 const swaggerUi = require("swagger-ui-express");
 
 const { errorHandler, notFound } = require("./middleware/errorHandler");
-
-// middleware
+const { authenticateUser } = require("./middleware/authHandler");
 
 // we shall change the cors origin once the frontend is deployed
 app.use(
@@ -34,14 +35,28 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger("dev"));
 app.use(express.static("public"));
 app.use(favicon(path.join(__dirname, "/public/favicon.ico")));
 
-// routes
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 1000 * 60 * 60 * 12 },
+    store: new MongoStore({
+      mongoUrl: process.env.MONGODB_URI,
+      collection: "sessions",
+    }),
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+require("./utils/passportConfig")(passport);
 
+// routes
 app.get("/", (req, res) => {
   res.send(
     '<h2>Welcome to Data-Night API home page!</h2><a href="/api-docs">Documentation</a>'
