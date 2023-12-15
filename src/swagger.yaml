@@ -437,7 +437,7 @@ paths:
       summary: Get Current User
       description: >-
         Returns authenticated user's information
-        An authenticated user's token required
+        An authenticated user's cookie is required
       operationId: GetCurrentUser
       parameters: []
       responses:
