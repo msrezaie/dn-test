@@ -35,6 +35,10 @@ const getEvent = async (req, res) => {
     .populate({
       path: "host",
       select: "_id name email",
+    })
+    .populate({
+      path: "chosenActivity",
+      select: "_id activity type votes",
     });
   if (!event) {
     res.status(404);
