@@ -7,10 +7,10 @@ const EventActivity = require("../models/EventActivity");
 //          GET /api/v1/events?host=true
 // @access  signed in users only
 const getAllEvents = async (req, res) => {
-  const { userID } = req.user;
+  const userID = req.user._id;
   const { host } = req.query;
 
-  const findCriteria = host ? { host: userID } : {};
+  const findCriteria = host === "true" ? { host: userID } : {};
 
   const response = await Event.find(findCriteria).populate("activities");
 
@@ -49,7 +49,7 @@ const getEvent = async (req, res) => {
 // @access  signed in users only
 const saveEvent = async (req, res) => {
   let { groupID, name, description, eventDateTime, activities } = req.body;
-  const { userID } = req.user;
+  const userID = req.user._id;
 
   if (!groupID || !(await Group.findOne({ _id: groupID }))) {
     res.status(400);
@@ -127,7 +127,7 @@ const updateEvent = async (req, res) => {
   }
 
   const newEvent = await Event.findOneAndUpdate(
-    { _id, host: req.user.userID },
+    { _id, host: req.user._id },
     {
       name,
       description,
