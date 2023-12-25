@@ -65,7 +65,6 @@ app.get("/", (req, res) => {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/api/v1", testsRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/events", authenticateUser, eventsRouter);
 app.use("/api/v1/activities", activitiesRouter);
