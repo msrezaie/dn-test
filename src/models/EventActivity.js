@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Event = require("./Event");
 
 const eventActivitiesSchema = new mongoose.Schema(
   {

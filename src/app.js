@@ -1,28 +1,28 @@
 const path = require("node:path");
 const express = require("express");
+
 const app = express();
 const cors = require("cors");
 const favicon = require("express-favicon");
 const logger = require("morgan");
-
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
-// imports
-const activitiesRouter = require("./routes/activitiesRouter");
-const eventsRouter = require("./routes/eventsRouter");
-const groupsRouter = require("./routes/groupsRouter");
-const usersRouter = require("./routes/usersRouter");
-const authRouter = require("./routes/authRouter");
-
-// middleware
 // api documentation: swagger-ui
 const swaggerDocument = require("yamljs").load(
   path.join(__dirname, "swagger.yaml")
 );
 const swaggerUi = require("swagger-ui-express");
 
+// routers
+const activitiesRouter = require("./routes/activitiesRouter");
+const eventsRouter = require("./routes/eventsRouter");
+const authRouter = require("./routes/authRouter");
+const usersRouter = require("./routes/usersRouter");
+const groupsRouter = require("./routes/groupsRouter");
+
+// middleware
 const { errorHandler, notFound } = require("./middleware/errorHandler");
 const { authenticateUser } = require("./middleware/authHandler");
 
@@ -65,11 +65,12 @@ app.get("/", (req, res) => {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/api/v1/activities", activitiesRouter);
-app.use("/api/v1/events", authenticateUser, eventsRouter);
-app.use("/api/v1/groups", authenticateUser, groupsRouter);
-app.use("/api/v1/users", usersRouter);
+app.use("/api/v1", testsRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/events", authenticateUser, eventsRouter);
+app.use("/api/v1/activities", activitiesRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/groups", authenticateUser, groupsRouter);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -38,7 +38,7 @@ const getEvent = async (req, res) => {
     })
     .populate({
       path: "chosenActivity",
-      select: "_id activity type votes",
+      select: "_id activity type",
     });
   if (!event) {
     res.status(404);
@@ -60,13 +60,16 @@ const saveEvent = async (req, res) => {
     throw new Error(
       "A valid 'groupID' value must be provided in order to link the event to its group!"
     );
-  } else if (!name) {
+  }
+  if (!name) {
     res.status(400);
     throw new Error("Event must have a name!");
-  } else if (!eventDateTime) {
+  }
+  if (!eventDateTime) {
     res.status(400);
     throw new Error("Event must have a date and time!");
-  } else if (activities) {
+  }
+  if (activities) {
     const isValidActivities =
       Array.isArray(activities) &&
       activities.every((activity) => {
@@ -77,7 +80,7 @@ const saveEvent = async (req, res) => {
     if (!isValidActivities) {
       res.status(400);
       throw new Error(
-        "Invalid 'activities' format. An array of at least one activity object that must have 'name' and 'type' and optional 'description' and 'imageURL' properties!"
+        "Invalid 'activities' format. An array of at least one activity object that must have 'activity' and 'type' properties!"
       );
     }
   }
@@ -102,9 +105,43 @@ const saveEvent = async (req, res) => {
 
 // @desc    Endpoint for updating an event
 // @route   PUT /api/v1/events/:_id
+//          PUT /api/v1/events/:_id?chosenActivity=activityID
 // @access  signed in users only
 const updateEvent = async (req, res) => {
   const { _id } = req.params;
+  const { chosenActivity } = req.query;
+
+  if (chosenActivity) {
+    const eventActivity = await EventActivity.findOne({
+      _id: chosenActivity,
+      eventID: _id,
+    });
+    if (!eventActivity) {
+      res.status(404);
+      throw new Error("Event or Activity not found!");
+    }
+
+    const updatedEvent = await Event.findOneAndUpdate(
+      { _id, host: req.user.userID },
+      {
+        chosenActivity: eventActivity._id,
+      },
+      { new: true }
+    );
+
+    if (!updatedEvent) {
+      res.status(403);
+      throw new Error(
+        "An error occurred: you do not have permission to perform this action!"
+      );
+    }
+
+    return res.json({
+      msg: `${eventActivity.activity} got chosen as the activity of the event!`,
+      updatedEvent,
+    });
+  }
+
   let { name, description, eventDateTime, activities } = req.body;
   let newActivityIDs = [];
   if (activities) {
@@ -142,13 +179,21 @@ const updateEvent = async (req, res) => {
     },
     { new: true }
   );
+
+  if (!newEvent) {
+    res.status(400);
+    throw new Error(
+      "An error occurred: the event does not exist or you do not have permission to perform this action!"
+    );
+  }
+
   return res.json({
     msg: "Event updated!",
     newEvent,
   });
 };
 
-// @desc    Endpoint for deleting a single event
+// @desc    Endpoint for deleting a an event
 // @route   DELETE /api/v1/events/:_id
 // @access  signed in users only
 const deleteEvent = async (req, res) => {
@@ -165,13 +210,13 @@ const deleteEvent = async (req, res) => {
 
   await EventActivity.deleteMany({ eventID: event._id });
 
-  return res.json({ msg: `Successfully removed event with ID: ${_id}` });
+  return res.json({ msg: `Successfully removed event with ID: ${_id}!` });
 };
 
 module.exports = {
   getAllEvents,
   getEvent,
   saveEvent,
-  updateEvent,
   deleteEvent,
+  updateEvent,
 };
