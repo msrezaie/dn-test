@@ -59,10 +59,18 @@ const login = async (req, res, next) => {
 // @route   POST /api/v1/auth/logout
 // @access  signed in users only
 const logout = async (req, res) => {
-  req.logout((err) => {
+  const sessionExists = req.isAuthenticated();
+  if (!sessionExists) {
+    res.status(400);
+    throw new Error("You are not authenticated!");
+  }
+  req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ error: "Error during logout" });
     }
+
+    res.clearCookie("user_sid");
+
     res.status(200).json({ msg: "Logged out!" });
   });
 };
