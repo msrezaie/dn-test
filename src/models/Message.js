@@ -6,12 +6,12 @@ const messageSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    content: {
+    message: {
       type: String,
     },
-    chat: {
+    group: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Chat",
+      ref: "Group",
     },
   },
   {
