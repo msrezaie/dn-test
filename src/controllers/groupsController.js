@@ -75,7 +75,7 @@ const getGroup = async (req, res) => {
 };
 
 // @desc    Endpoint for creating a group
-// @route   POST /api/v1/activities
+// @route   POST /api/v1/groups
 // @access  signed in users only
 const createGroup = async (req, res) => {
   const { groupName, description, memberEmails } = req.body;
@@ -96,6 +96,8 @@ const createGroup = async (req, res) => {
 
   // Add the found userIDs to the group's members array
   const memberIDs = foundUsers?.map((user) => user._id);
+  // adding the owner to the members array
+  memberIDs.push(req.user._id);
 
   const newGroup = await Group.create({
     groupName,
